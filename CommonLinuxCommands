@@ -1,0 +1,102 @@
+		**********************
+		Moving-Renaming Files
+		**********************
+
+--------------------------------------------------------------------------------------------
+https://www.freecodecamp.org/news/the-linux-commands-handbook/#introductiontolinuxandshells
+--------------------------------------------------------------------------------------------
+
+# pear and apple moved to the fruits folder
+
+	touch pear
+	touch apple
+	mkdir fruits
+	mv pear apple fruits 
+
+# Copy contents of fruits directory into newly created cars directory
+  The -r means to recursively copy all contents
+
+	mkdir fruits
+	cp -r fruits cars
+
+# The Linux "open" command
+  The "open" command lets you open a file using this syntax:
+
+	open <file name>
+	open <directory name>
+	open . <current directory>
+	open <application name>
+
+# The Linux find command
+  The find command can be used to find files or folders matching a 
+  particular search pattern. It searches recursively.
+
+- Find all the files under the current tree that have the 
+  .js extension and print the relative path of each file that matches:
+
+	find . -name '*.js'
+
+- It's important to use quotes around special characters like * to avoid 
+  the shell interpreting them.
+
+
+# Find directories under the current tree matching the name "src":
+
+	find . -type d -name cars
+	./cars
+
+-  Use "-type f" to search only files, or "-type l" to only search symbolic links.
+-  "-name" is case sensitive. use "-iname" to perform a case-insensitive search.
+
+	find . -type f -name log3
+	./log3
+
+- You can search under multiple root trees:
+
+	find folder1 folder2 -name filename.txt
+
+- example:
+
+	find cars FRUITS -name apple
+	cars/apple
+	FRUITS/apple
+
+# Find directories under the current tree matching the name 
+  "node_modules" or 'public':
+
+	find . -type d -name FRUITS -or -name cars
+	./cars
+	./FRUITS
+
+- You can also exclude a path using -not -path:
+
+	find . -type d -name '*.md' -not -path 'node_modules/*'
+
+
+# You can search files that have more than 100 characters (bytes) in them:
+
+	find . -type f -size +100c
+
+
+# Search files bigger than 100KB but smaller than 1MB:
+
+	find . -type f -size +100k -size -1M
+
+# Search files edited more than 3 days ago:
+
+	find . -type f -mtime +3
+
+# Search files edited in the last 24 hours:
+
+	find . -type f -mtime -1
+
+# You can delete all the files matching a search by adding the -delete option. 
+  This deletes all the files edited in the last 24 hours:
+
+	find . -type f -mtime -1 -delete
+
+# You can execute a command on each result of the search. 
+  In this example we run cat to print the file content:
+
+	find . -type f -exec cat {} \;
+
